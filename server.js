@@ -1,3 +1,5 @@
+const fs = require('fs');
+const https = require('https');
 const express = require('express');
 const connectDB = require('./config/db');
 const phoneRoutes = require('./routes/phoneRoutes');
@@ -8,6 +10,9 @@ const cors = require('cors');
 require('dotenv').config();
 
 
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/plateforme.techogeria.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/plateforme.techogeria.com/fullchain.pem', 'utf8');
+const credentials = { key: privateKey, cert: certificate };
 
 
 const app = express();
@@ -41,6 +46,7 @@ app.post('/api/verify-token', (req, res) => {
     }
   });
   
-
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+https.createServer(credentials, app).listen(PORT, () => {
+    console.log(`Server running securely on https://localhost:${PORT}`);
+});
