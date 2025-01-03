@@ -4,6 +4,7 @@ const Phone = require('../models/Phone');
 
 exports.createPhone = async (req, res) => {
   try {
+
     const phoneData = req.body; // Extract all fields from the request body
     const imageUrl = req.cloudinaryUrl; // Image URL from Cloudinary middleware
 
