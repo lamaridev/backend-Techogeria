@@ -23,12 +23,6 @@ app.use(express.json());
 connectDB();
 
 
-app.get('/', (req, res) => {
-  res.send('Hi');
-});
-
-
-
 app.use('/api/users', userRoutes);
 app.use('/api/phones', phoneRoutes);
 app.use("/api/phoneForSale", phoneForSale);
